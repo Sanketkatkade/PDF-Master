@@ -1,0 +1,79 @@
+/* Your existing CSS styles */
+
+body {
+    background-color: #f8f9fa;
+  }
+
+  h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .container {
+    width: 80%;
+    margin: 20px auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    text-align: center;
+  }
+  
+  .description {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 20px;
+  }
+  
+  .upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .file-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 2px dashed #3498db;
+    cursor: pointer;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    transition: border 0.3s ease-in-out;
+  }
+  
+  .file-label span {
+    font-size: 16px;
+  }
+  
+  #fileInput {
+    display: none;
+  }
+  
+  .file-label:hover {
+    border-color: #2980b9;
+  }
+  
+  .upload-btn {
+    background-color: #3498db;
+    color: #fff;
+    padding: 14px 115px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .upload-btn:hover {
+    background-color: #2980b9;
+  }
+  
+  .file-info {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #555;
+  }
+  

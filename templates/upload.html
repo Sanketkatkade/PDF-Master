@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/upload.css') }}">
+  <title>{{ title }} | PDF Master</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <header>
+    <h1>PDF Master - {{ title }}</h1>
+  </header>
+
+  <div class="container">
+    <p class="description">Unlock the power of PDF Master by uploading your PDF files!</p>
+    <div class="upload-container">
+      <form action="{{ endpoint }}" method="POST" enctype="multipart/form-data">
+        <label for="fileInput" class="file-label">
+          <span id="fileNameSpan">Choose a PDF file</span>
+          {% if options == "merge" %}
+          <input id="fileInput" type="file" name="pdfs" accept=".pdf" multiple>
+          {% else %}
+          <input id="fileInput" type="file" name="file" accept=".pdf">
+          {% endif %}
+        </label>
+        {% if options == "split" %}
+        <p>Enter Pages to split.(eg. 1-2,3-4)</p>
+        <input type="text" name="pagenos" class="form-control" style="display: inline; margin-bottom: 20px;" id="pages"
+          required>
+        {% else %}
+          {% if options == "merge" %}
+            <p>Select multiple pdfs while uploading. PDFs will be merged in alphabetical order.</p>
+            <div id="multiplepdfs"></div>
+          {% endif %}
+        {% endif %}
+        <button id="uploadBtn" type="submit" class="upload-btn">Upload</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const fileNameSpan = document.getElementById('fileNameSpan');
+    const option = "{{ options }}"
+
+    fileInput.addEventListener('change', (event) => {
+      if (option == "merge") {
+        let multipleNames = document.getElementById('multiplepdfs');
+        const files = event.target.files;
+        console.log(event.target.files);
+        if (files.length > 0) {
+          let list = "<ul style=\"list-style-type: none;\">";
+          for (let i = 0; i < files.length; i++) {
+            list += "<li><b>" + files[i].name + "</b></li>";
+          }
+          list += "</ul>";
+          multipleNames.innerHTML = list;
+        }
+      }
+      else {
+        const file = event.target.files[0];
+        if (file) {
+          fileNameSpan.textContent = file.name;
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

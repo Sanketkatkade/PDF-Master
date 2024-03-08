@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+  <title>PDF Master - Home</title>
+</head>
+<body>
+  <header>
+    <h1>PDF Master</h1>
+  </header>
+
+  <div class="container">
+    <p class="description">Explore all the PDF Utility options below:</p>
+
+    <div class="options">
+      <div class="option">
+        <h2>PDF Compression</h2>
+        <p>Reduce the file size of your PDF.</p>
+        <button onclick="location.href='/pdfcompress'" class="btn compress-btn">Compress PDF</button>
+      </div>
+
+      <div class="option">
+        <h2>Convert to DOCX</h2>
+        <p>Convert your PDF to Word (DOCX) format.</p>
+        <button onclick="location.href='/pdf2doc'" class="btn convert-docx-btn">Convert to DOCX</button>
+      </div>
+
+      <div class="option">
+        <h2>Convert to PPTX</h2>
+        <p>Convert your PDF to PowerPoint (PPTX) format.</p>
+        <button onclick="location.href='/pdf2pptx'" class="btn convert-pptx-btn">Convert to PPTX</button>
+      </div>
+
+      <div class="option">
+        <h2>Convert to Image</h2>
+        <p>Convert your PDF to an image format.</p>
+        <button onclick="location.href='/pdf2image'" class="btn convert-image-btn">Convert to Image</button>
+      </div>
+
+      <div class="option">
+        <h2>Split PDF</h2>
+        <p>Split your PDF into multiple files.</p>
+        <button onclick="location.href='/splitpdf'" class="btn split-pdf-btn">Split PDF</button>
+      </div>
+
+      <div class="option">
+        <h2>Merge PDF</h2>
+        <p>Merge multiple PDFs into a single file.</p>
+        <button onclick="location.href='/mergepdfs'" class="btn merge-pdf-btn">Merge PDF</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

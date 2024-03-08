@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/download.css') }}">
+  <title>PDF Master - Download your File</title>
+</head>
+<body>
+  <header>
+    <h1>PDF Master - Download Your File</h1>
+  </header>
+
+  <div class="container">
+    {% if initial_size and compressed_size and ratio %}
+    <div>
+        <ul style="list-style-type: none;">
+            <li>Initial Size: <b>{{ initial_size }}</b></li>
+            <li>Compressed Size: <b>{{ compressed_size }}</b></li>
+            <li>Compression Ratio: <b>{{ ratio }}</b></li>
+        </ul>
+    </div>
+    {% endif %}
+    <p class="description">Your File is ready for download! Its a one time download.</p>
+    <div class="download-container">
+      <a href="{{ download_link }}" id="downloadLink" class="download-btn">Download</a>
+      <a href="/" id="downloadLink" class="download-btn">Home Page</a>
+    </div>
+  </div>
+
+</body>
+</html>
