@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, send_file, after_this_request
-from PDFNetPython3.PDFNetPython import PDFDoc, Optimizer, SDFDoc, PDFNet
+from apryse_sdk import PDFNet, PDFDoc, Optimizer, SDFDoc
 from pdf2image import convert_from_path
 from pdf2pptx import convert_pdf2pptx
 from pdf2docx import parse
