@@ -63,6 +63,13 @@ def directory_tree(path):
             tree["content"].append(directory_tree(item_path))
     return tree
 
+def clear_temporary_files(folder_path):
+    for item in os.listdir(folder_path):
+        item_path = os.path.join(folder_path, item)
+        if os.path.isfile(item_path):
+            os.remove(item_path)
+        elif os.path.isdir(item_path):
+            clear_temporary_files(item_path)
 
 # Index Page
 @app.route('/')
@@ -72,8 +79,11 @@ def upload_form():
 
 
 
-@app.route('/files')
+@app.route('/files', methods = ["GET","POST"])
 def file_manager():
+    if request.method == 'POST':
+        clear_temporary_files(FILES_FOLDER)
+        return redirect("/files")
     folders = directory_tree(FILES_FOLDER)
     return render_template('filemanager.html', folders = folders, password = dir_password)
 
