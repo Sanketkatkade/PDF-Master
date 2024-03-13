@@ -1,5 +1,5 @@
-from flask import Flask, render_template, request, redirect, send_file, after_this_request
-from apryse_sdk import PDFNet, PDFDoc, Optimizer, SDFDoc
+from flask import Flask, render_template, request, redirect, send_file, after_this_request, jsonify
+from PDFNetPython3.PDFNetPython import PDFNet, PDFDoc, Optimizer, SDFDoc
 from pdf2image import convert_from_path
 from pdf2pptx import convert_pdf2pptx
 from pdf2docx import parse
@@ -11,6 +11,9 @@ import os
 
 app = Flask(__name__, static_folder='static')
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+dir_password = "Password"
+
+FILES_FOLDER = os.path.join(BASE_DIR, 'files')
 
 UPLOAD_FOLDER = os.path.join(BASE_DIR, 'files/uploads')
 OUTPUT_FOLDER = os.path.join(BASE_DIR, 'files/output')
@@ -50,7 +53,15 @@ def get_size_format(b, factor=1024, suffix="B"):
         b /= factor
     return f"{b:.2f}Y{suffix}"
 
-
+def directory_tree(path):
+    tree = {"name": os.path.basename(path), "type": "folder", "content": []}
+    for item in os.listdir(path):
+        item_path = os.path.join(path, item)
+        if os.path.isfile(item_path):
+            tree["content"].append({"name": item, "type": "file", "content": []})
+        else:
+            tree["content"].append(directory_tree(item_path))
+    return tree
 
 
 # Index Page
@@ -58,6 +69,13 @@ def get_size_format(b, factor=1024, suffix="B"):
 def upload_form():
     return render_template('index.html')
 
+
+
+
+@app.route('/files')
+def file_manager():
+    folders = directory_tree(FILES_FOLDER)
+    return render_template('filemanager.html', folders = folders, password = dir_password)
 
 
 
