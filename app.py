@@ -10,10 +10,21 @@ import fitz
 import os
 
 app = Flask(__name__, static_folder='static')
-app.config['UPLOAD_FOLDER'] = 'files/uploads'
-app.config['OUTPUT_FOLDER'] = 'files/output'
-app.config['PAGES_FOLDER'] = 'files/pages'
-app.config['PDF_FOLDER'] = 'files/pdfs'
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+
+UPLOAD_FOLDER = os.path.join(BASE_DIR, 'files/uploads')
+OUTPUT_FOLDER = os.path.join(BASE_DIR, 'files/output')
+PAGES_FOLDER = os.path.join(BASE_DIR, 'files/pages')
+PDF_FOLDER = os.path.join(BASE_DIR, 'files/pdfs')
+
+for folder in [UPLOAD_FOLDER, OUTPUT_FOLDER, PAGES_FOLDER, PDF_FOLDER]:
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['OUTPUT_FOLDER'] = OUTPUT_FOLDER
+app.config['PAGES_FOLDER'] = PAGES_FOLDER
+app.config['PDF_FOLDER'] = PDF_FOLDER
 
 
 def name_uuid():
