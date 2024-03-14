@@ -1,0 +1,63 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 90vh;
+}
+
+.container {
+    height: 95%;
+    width: 90%;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.folderlist {
+    display: inline-grid;
+    grid-template-columns: auto auto auto auto auto auto;
+}
+
+.folder {
+    flex: auto;
+    margin-left: 20px;
+    margin-top: 15px;
+    border: 1px solid black;
+    font-size: 22px;
+    text-align: center;
+    height: 5em;
+    width: 5em;
+    display: grid;
+    grid-template-rows: auto auto;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.foldername .filename{
+    padding: 1px;
+    margin: 1px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif, 'Arial Narrow', Arial, sans-serif;
+}
+
+i{
+    padding: 2px;
+    padding-top: 20px;
+    color: #F8D775;
+}
+
+i.fa-arrow-left{
+    padding-top: 0px;
+    padding-right: 5px;
+    color: black;
+}
+
+.home{
+    display: inline-grid;
+    grid-template-columns: auto auto auto;
+    align-items: center;
+    cursor: pointer;
+}
+
+.hometext{
+    margin-right: 5px;
+}
