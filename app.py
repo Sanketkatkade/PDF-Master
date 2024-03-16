@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, send_file, after_this_request
+from flask import Flask, render_template, request, redirect, send_file, after_this_request, jsonify
 from apryse_sdk import PDFNet, PDFDoc, Optimizer, SDFDoc
 from pdf2image import convert_from_path
 from pdf2pptx import convert_pdf2pptx
@@ -10,10 +10,24 @@ import fitz
 import os
 
 app = Flask(__name__, static_folder='static')
-app.config['UPLOAD_FOLDER'] = 'files/uploads'
-app.config['OUTPUT_FOLDER'] = 'files/output'
-app.config['PAGES_FOLDER'] = 'files/pages'
-app.config['PDF_FOLDER'] = 'files/pdfs'
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+dir_password = "Password"
+
+FILES_FOLDER = os.path.join(BASE_DIR, 'files')
+
+UPLOAD_FOLDER = os.path.join(BASE_DIR, 'files/uploads')
+OUTPUT_FOLDER = os.path.join(BASE_DIR, 'files/output')
+PAGES_FOLDER = os.path.join(BASE_DIR, 'files/pages')
+PDF_FOLDER = os.path.join(BASE_DIR, 'files/pdfs')
+
+for folder in [UPLOAD_FOLDER, OUTPUT_FOLDER, PAGES_FOLDER, PDF_FOLDER]:
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['OUTPUT_FOLDER'] = OUTPUT_FOLDER
+app.config['PAGES_FOLDER'] = PAGES_FOLDER
+app.config['PDF_FOLDER'] = PDF_FOLDER
 
 
 def name_uuid():
@@ -39,14 +53,39 @@ def get_size_format(b, factor=1024, suffix="B"):
         b /= factor
     return f"{b:.2f}Y{suffix}"
 
+def directory_tree(path):
+    tree = {"name": os.path.basename(path), "type": "folder", "content": []}
+    for item in os.listdir(path):
+        item_path = os.path.join(path, item)
+        if os.path.isfile(item_path):
+            tree["content"].append({"name": item, "type": "file", "content": []})
+        else:
+            tree["content"].append(directory_tree(item_path))
+    return tree
 
-
+def clear_temporary_files(folder_path):
+    for item in os.listdir(folder_path):
+        item_path = os.path.join(folder_path, item)
+        if os.path.isfile(item_path):
+            os.remove(item_path)
+        elif os.path.isdir(item_path):
+            clear_temporary_files(item_path)
 
 # Index Page
 @app.route('/')
 def upload_form():
     return render_template('index.html')
 
+
+
+
+@app.route('/files', methods = ["GET","POST"])
+def file_manager():
+    if request.method == 'POST':
+        clear_temporary_files(FILES_FOLDER)
+        return redirect("/files")
+    folders = directory_tree(FILES_FOLDER)
+    return render_template('filemanager.html', folders = folders, password = dir_password)
 
 
 
